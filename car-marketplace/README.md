@@ -46,6 +46,25 @@ Chrome, Edge and Firefox resolve `*.localhost` to your own machine, so no hosts-
 
 If your browser can't use `*.localhost` (Safari), use `http://localhost:8000/?broker=toyota`. This only works while `APP_DEBUG=1`.
 
+## View it on your phone
+
+Your phone and computer need to be on the same Wi-Fi. On Mac or Linux:
+
+```bash
+cd car-marketplace
+./serve-phone.sh
+```
+
+The script prints addresses like `http://toyota.192.168.1.20.nip.io:8000`; type one into your phone's browser. [nip.io](https://nip.io) is a free DNS service that points `anything.<ip>.nip.io` at `<ip>`, so the broker subdomains work on a phone without setup.
+
+On Windows, find your IP with `ipconfig` (the IPv4 address), then run:
+
+```powershell
+$env:BASE_DOMAIN="192.168.1.20.nip.io"; php -S 0.0.0.0:8000 -t public public/index.php
+```
+
+If the phone can't connect, allow PHP through your computer's firewall when it asks. Some home routers block nip.io names that point to local addresses; if yours does, deploy the site online (see below).
+
 ## How it works
 
 ```
