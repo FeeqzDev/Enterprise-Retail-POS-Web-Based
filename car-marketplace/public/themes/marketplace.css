@@ -1,12 +1,70 @@
-/* KeretaKu main site: neutral, trustworthy, lets broker colours stand out. */
-:root { --primary: #ff5a1f; --accent: #0f172a; --bg: #ffffff; --text: #0f172a; --radius: 12px; }
-.logo-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: var(--primary); margin-right: 8px; }
-.hero { background: radial-gradient(circle at 80% 0%, #1e293b, #0f172a); }
-.hero .btn { background: var(--primary); color: #fff; }
-.search { display: grid; grid-template-columns: repeat(3, 1fr) auto; gap: 10px; margin-top: 28px; background: #fff; padding: 10px; border-radius: 14px; max-width: 860px; }
-.broker-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
-.broker-card { display: grid; gap: 4px; padding: 20px; border-radius: 12px; text-decoration: none; background: var(--surface); border-left: 6px solid var(--primary); }
-.broker-card:hover { box-shadow: 0 8px 20px rgba(0,0,0,.08); }
-.broker-makes { font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; color: var(--primary); font-weight: 700; }
-.broker-host { font-size: .85rem; color: var(--muted); font-family: ui-monospace, monospace; }
-@media (max-width: 760px) { .search { grid-template-columns: 1fr; } }
+/* KeretaKu main marketplace: clean, trustworthy, photo-led (Carsome-style). */
+:root { --primary: #ff5a1f; --accent: #0b1f3a; }
+
+.logo { font-weight: 800; font-size: 1.55rem; letter-spacing: -.04em; color: var(--accent); }
+.logo span { color: var(--primary); }
+.site-footer .logo { color: #fff; margin-bottom: 10px; }
+
+/* Hero with full-bleed photo and floating search */
+.hero { position: relative; color: #fff; min-height: 600px; display: flex; align-items: center; }
+.hero-bg { position: absolute !important; inset: 0; }
+.hero-bg img { object-position: center 60%; }
+.hero::before { content: ""; position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(100deg, rgba(8,17,33,.92) 0%, rgba(8,17,33,.7) 42%, rgba(8,17,33,.15) 100%); }
+.hero-inner { position: relative; z-index: 2; width: 100%; padding-top: 72px; padding-bottom: 72px; }
+.hero h1 { font-size: clamp(2.2rem, 5vw, 3.8rem); letter-spacing: -.035em; }
+.hero-inner > p { font-size: 1.15rem; max-width: 560px; opacity: .88; margin-bottom: 28px; }
+.search-box { display: grid; grid-template-columns: repeat(3, 1fr) auto; gap: 4px; background: #fff; color: var(--text); padding: 8px; border-radius: 16px;
+              max-width: 900px; box-shadow: 0 24px 60px rgba(0,0,0,.3); }
+.search-box label { display: grid; padding: 8px 14px; border-radius: 10px; cursor: pointer; }
+.search-box label:hover { background: var(--surface-2); }
+.search-box label + label { border-left: 1px solid var(--border); }
+.search-box span { font-size: .74rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.search-box select { border: 0; background: transparent; font-weight: 600; font-size: 1rem; padding: 2px 0; outline: 0; cursor: pointer; }
+.hero-trust { display: flex; gap: 26px; margin-top: 26px; flex-wrap: wrap; font-size: .92rem; opacity: .9; }
+.hero-trust span { display: inline-flex; gap: 8px; align-items: center; }
+
+/* Brand tiles (wordmarks; swap for official logos when brokers supply them) */
+.brand-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; }
+.brand-tile { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px; display: grid; gap: 6px; justify-items: center; transition: box-shadow .2s, border-color .2s; }
+.brand-tile:hover { box-shadow: var(--shadow-lg); border-color: transparent; }
+.brand-word { font-weight: 800; font-size: 1.3rem; letter-spacing: .14em; }
+.brand-toyota { color: #eb0a1e; } .brand-proton { color: #0a2d6e; } .brand-perodua { color: #00a651; } .brand-honda { color: #cc0000; }
+.brand-tile small { color: var(--muted); }
+
+.body-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 14px; }
+.body-tile { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 22px 16px; display: grid; justify-items: center; gap: 4px; }
+.body-tile .icon { color: var(--primary); margin-bottom: 6px; }
+.body-tile small { color: var(--muted); }
+.body-tile:hover { border-color: var(--primary); }
+
+.how { background: var(--surface); border-block: 1px solid var(--border); padding: 64px 0; }
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.steps > div { text-align: center; padding: 8px 20px; }
+.step-no { display: inline-grid; place-items: center; width: 52px; height: 52px; border-radius: 50%; background: color-mix(in srgb, var(--primary) 12%, #fff); color: var(--primary); font-weight: 800; font-size: 1.3rem; margin-bottom: 14px; }
+.steps p { color: var(--muted); }
+
+/* Broker directory */
+.broker-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.broker-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); transition: box-shadow .2s, transform .2s; }
+.broker-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+.broker-cover { aspect-ratio: 16 / 8; border-bottom: 4px solid var(--seller); }
+.broker-cover.no-photo { background: var(--seller) !important; }
+.broker-body { padding: 0 18px 18px; display: grid; gap: 4px; }
+.broker-body .seller-mark { margin-top: -24px; border: 3px solid var(--surface); margin-bottom: 6px; }
+.broker-meta { font-size: .82rem; color: var(--muted); display: inline-flex; align-items: center; gap: 4px; }
+.broker-meta .icon { color: #f59e0b; }
+.broker-host { margin-top: 8px; font-size: .82rem; font-weight: 600; color: var(--seller); font-family: ui-monospace, SFMono-Regular, Menlo, monospace; display: inline-flex; align-items: center; gap: 4px; }
+
+.join { display: grid; grid-template-columns: 1.6fr 1fr; gap: 32px; align-items: center; padding: 36px; }
+.join .feature-list { grid-template-columns: 1fr; margin-top: 16px; }
+.join-cta { background: var(--surface-2); border-radius: var(--radius); padding: 24px; }
+.join-cta p { color: var(--muted); }
+
+@media (max-width: 1000px) { .broker-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 760px) {
+  .hero { min-height: 0; }
+  .search-box { grid-template-columns: 1fr; }
+  .search-box label + label { border-left: 0; border-top: 1px solid var(--border); }
+  .steps, .join, .broker-grid { grid-template-columns: 1fr; }
+}

@@ -1,13 +1,21 @@
-/* Perodua broker: bright, round, first-car-buyer friendly (CSS-only). */
-:root { --radius: 22px; --font: "Trebuchet MS", "Segoe UI", sans-serif; }
-.site-header { border: 0; box-shadow: 0 2px 0 var(--accent); }
-.brand { color: var(--primary); }
-.hero { background: var(--primary); position: relative; overflow: hidden; }
-.hero::after { content: ""; position: absolute; right: -80px; top: -80px; width: 320px; height: 320px; border-radius: 50%; background: var(--accent); opacity: .9; }
-.hero .wrap { position: relative; z-index: 1; }
-.hero .btn { background: var(--accent); color: var(--text); }
-.car-card { background: #fff; box-shadow: 0 4px 0 color-mix(in srgb, var(--primary) 25%, transparent); }
-.car-media { background: color-mix(in srgb, var(--accent) 25%, #fff); }
-.car-price { color: var(--primary); }
-.car-monthly { background: var(--accent); color: var(--text); display: inline-block; padding: 2px 10px; border-radius: 99px; font-weight: 700; }
-.btn { border-radius: 99px; }
+/* Perodua broker: bright, rounded, first-car-buyer friendly. CSS-only customisation. */
+:root { --radius: 22px; --radius-sm: 14px; --bg: #fffdf6; --primary-ink: #fff; }
+.topbar { background: var(--primary); }
+.site-header { border-bottom: 3px solid var(--accent); }
+.brand-mark { border-radius: 50%; }
+.btn { border-radius: 999px; }
+.tenant-hero { min-height: 560px; }
+.tenant-hero::before { background: linear-gradient(90deg, color-mix(in srgb, var(--primary) 92%, #000) 0%, color-mix(in srgb, var(--primary) 70%, transparent) 50%, transparent 100%); }
+.tenant-hero-bg { right: 0; }
+.tenant-hero .btn-primary { background: var(--accent); color: #1f2937; }
+.tenant-hero h1::after { content: ""; display: block; width: 90px; height: 8px; border-radius: 99px; background: var(--accent); margin-top: 18px; }
+.eyebrow { color: color-mix(in srgb, var(--primary) 80%, #000); }
+.tenant-hero .eyebrow { background: var(--accent); color: #1f2937; padding: 6px 12px; border-radius: 99px; opacity: 1; }
+.usp { border: 0; background: #fff; }
+.usp > .icon { background: color-mix(in srgb, var(--accent) 30%, #fff); color: color-mix(in srgb, var(--primary) 85%, #000); padding: 8px; width: 40px; height: 40px; border-radius: 50%; }
+.car-card { border: 0; box-shadow: 0 6px 0 color-mix(in srgb, var(--primary) 18%, transparent), var(--shadow); }
+.car-card-price span { background: var(--accent); color: #1f2937; padding: 3px 10px; border-radius: 99px; }
+.badge-promo { background: var(--accent); color: #1f2937; border-radius: 99px; }
+.cta-band { background: var(--primary); border-radius: 32px; max-width: 1200px; margin: 40px auto 56px; }
+.cta-band .btn-primary { background: var(--accent); color: #1f2937; }
+.loan-result { background: var(--primary); }

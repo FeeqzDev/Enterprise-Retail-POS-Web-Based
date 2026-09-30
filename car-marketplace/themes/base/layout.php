@@ -1,31 +1,33 @@
 <?php
-/** @var array $site  @var string $content  @var string $title */
-$broker = $site['broker'];
-$colors = $broker['colors'] ?? [];
+/** Default broker layout. @var array $site  @var string $content */
+$b = $site['broker'];
+$initials = implode('', array_map(fn ($w) => $w[0], array_slice(explode(' ', $b['short']), 0, 2)));
 ?>
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title><?= e($title ?? config('app')['name']) ?></title>
-  <link rel="stylesheet" href="/themes/base.css">
-  <?php if ($site['theme'] !== 'base'): ?>
-    <link rel="stylesheet" href="/themes/<?= e($site['theme']) ?>.css">
-  <?php endif; ?>
-  <?php if ($colors): ?>
-    <style>:root{<?php foreach ($colors as $k => $v): ?>--<?= e($k) ?>:<?= e($v) ?>;<?php endforeach; ?>}</style>
-  <?php endif; ?>
-</head>
-<body class="theme-<?= e($site['theme']) ?>">
+<head><?= partial('head', ['title' => $title ?? null]) ?></head>
+<body class="theme-<?= e($site['theme']) ?> tenant">
+  <div class="topbar">
+    <div class="wrap topbar-row">
+      <span><?= icon('pin', 14) ?> <?= e($b['area']) ?></span>
+      <span class="hide-sm"><?= icon('clock', 14) ?> <?= e($b['hours']) ?></span>
+      <a href="tel:+<?= e($b['phone']) ?>"><?= icon('phone', 14) ?> <?= e(display_phone($b['phone'])) ?></a>
+      <a class="topbar-network" href="<?= e(site_url(null)) ?>">Official broker on <?= e(config('app')['name']) ?></a>
+    </div>
+  </div>
+
   <header class="site-header">
     <div class="wrap header-row">
-      <a class="brand" href="/"><?= e($broker['name'] ?? config('app')['name']) ?></a>
-      <nav>
-        <a href="/#cars">Cars</a>
-        <?php if ($broker): ?>
-          <a class="btn btn-small" href="https://wa.me/<?= e($broker['phone']) ?>" target="_blank" rel="noopener">WhatsApp us</a>
-        <?php endif; ?>
+      <a class="brand" href="/">
+        <span class="brand-mark"><?= e($initials) ?></span>
+        <span class="brand-text"><strong><?= e($b['short']) ?></strong><small>Authorised <?= e(implode(' & ', $b['makes'])) ?> dealer</small></span>
+      </a>
+      <button class="nav-toggle" aria-label="Menu" data-nav-toggle><?= icon('menu', 22) ?></button>
+      <nav class="main-nav" data-nav>
+        <a href="/cars">New Cars</a>
+        <a href="/loan-calculator">Loan Calculator</a>
+        <a href="/about">About Us</a>
+        <a class="btn btn-primary btn-sm" href="<?= e(whatsapp_url($b['phone'], "Hi {$b['short']}, I'd like to know more about your cars.")) ?>" target="_blank" rel="noopener"><?= icon('chat', 16) ?> WhatsApp</a>
       </nav>
     </div>
   </header>
@@ -33,14 +35,27 @@ $colors = $broker['colors'] ?? [];
   <main><?= $content ?></main>
 
   <footer class="site-footer">
-    <div class="wrap footer-row">
-      <?php if ($broker): ?>
-        <div>
-          <strong><?= e($broker['name']) ?></strong><br>
-          <?= e($broker['address']) ?> · <?= e($broker['email']) ?>
-        </div>
-      <?php endif; ?>
-      <a class="powered" href="<?= e(site_url(null)) ?>">Part of <?= e(config('app')['name']) ?> →</a>
+    <div class="wrap footer-grid">
+      <div>
+        <div class="footer-brand"><?= e($b['name']) ?></div>
+        <p><?= e($b['about']) ?></p>
+      </div>
+      <div>
+        <h4>Models</h4>
+        <?php foreach (cars($site['slug']) as $c): ?>
+          <a href="/car/<?= e($c['id']) ?>"><?= e("{$c['make']} {$c['model']}") ?></a>
+        <?php endforeach; ?>
+      </div>
+      <div>
+        <h4>Visit us</h4>
+        <p><?= icon('pin', 14) ?> <?= e($b['address']) ?></p>
+        <p><?= icon('clock', 14) ?> <?= e($b['hours']) ?></p>
+        <p><?= icon('phone', 14) ?> <?= e(display_phone($b['phone'])) ?> · <?= e($b['email']) ?></p>
+      </div>
+    </div>
+    <div class="wrap footer-bottom">
+      <span>© <?= date('Y') ?> <?= e($b['name']) ?></span>
+      <span>Car photos: Wikimedia Commons contributors, CC BY-SA. Powered by <a href="<?= e(site_url(null)) ?>"><?= e(config('app')['name']) ?></a></span>
     </div>
   </footer>
 </body>

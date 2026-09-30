@@ -1,18 +1,33 @@
 # KeretaKu: multi-broker new car marketplace (sample)
 
-A small Carsome-style sample, in plain PHP 8 with no dependencies:
+A Carsome-style sample written in plain PHP 8. It has no framework, no build step and no dependencies.
 
-- **Main site** (`keretaku.my`) lists every broker's cars, with filters for brand, body type and budget, plus a directory of brokers.
-- **Each broker gets a subdomain** (`toyota.keretaku.my`, `proton.keretaku.my`, …) that shows only their stock and sends leads to them.
-- **Each broker can have their own design.** There are three levels:
-  1. **Colours only.** Set the `colors` in `config/brokers.php` (Honda uses this with the default theme).
-  2. **CSS theme.** Add `public/themes/<name>.css` (Proton `sleek`, Perodua `friendly`).
-  3. **Custom templates.** Add `themes/<name>/home.php` (or `car.php`, `layout.php`…) to change the layout completely (Toyota `showroom`). Any template a theme doesn't provide falls back to `themes/base/`.
+- **Main marketplace** (`keretaku.my`) lists every broker's cars in one place. Buyers can search and filter them, then view each car's details and send an enquiry. Each lead is routed automatically to the broker selling that car.
+- **Each broker gets a subdomain** (`toyota.keretaku.my`, `proton.keretaku.my`, …). A broker site is a full showroom website that shows only that broker's stock.
+- **Each broker can have their own design**, at three levels:
+  1. **Colours only.** Set `colors` in `config/brokers.php`. Honda does this with the default theme.
+  2. **Theme stylesheet.** Add `public/themes/<name>.css`. Proton uses `sleek` (navy, gold and serif) and Perodua uses `friendly` (rounded and bright).
+  3. **Custom templates.** Add `themes/<name>/home.php` (or `car.php`, `layout.php`, …) to change the whole layout. Toyota uses `showroom`, a dark cinematic home page with a model-by-model line-up. Any template a theme doesn't provide falls back to `themes/base/`.
 - A broker can also use **their own domain** by setting `custom_domain`.
 
-| Main site | Toyota (custom templates) | Proton (CSS only) | Perodua (CSS only) |
-|---|---|---|---|
-| ![](docs/main.png) | ![](docs/toyota.png) | ![](docs/proton.png) | ![](docs/perodua.png) |
+## Pages
+
+| Page | Main site | Broker site |
+|---|---|---|
+| `/` | Hero with search, brands, featured cars, body types, how it works, broker showcase | Branded hero, trust points, the broker's line-up |
+| `/cars` | Every broker's cars, with filters (brand, body type, fuel, price, keyword), sorting and pagination | Same page, showing only this broker's stock |
+| `/car/{id}` | Photo gallery, key specs, colours, highlights, loan calculator, enquiry form, seller card, similar cars | Same page, showing only this broker's cars |
+| `/loan-calculator` | Interactive flat-rate hire-purchase calculator | ✓ |
+| `/brokers` | Broker directory and a "become a partner" call to action | none |
+| `/about` | none | Showroom info, stats, directions, WhatsApp |
+
+Enquiries (test drive, quote or loan check) are validated and CSRF-protected, then appended to `storage/leads.jsonl`. Each lead is tagged with the broker and whether it came from the marketplace or the broker's own site.
+
+## Photos
+
+Car photos are real, openly licensed photos from **Wikimedia Commons** (CC BY / CC BY-SA). The browser loads them directly by file name. Each detail page links to the source files, and the footer credits the photographers. If a photo can't load, the page shows a clean placeholder instead of a broken image.
+
+For production, brokers upload their own stock photos. Put a path or URL in a car's `images` list (e.g. `/uploads/vios-front.jpg`) and it is used as-is.
 
 ## Run locally
 
@@ -21,21 +36,22 @@ cd car-marketplace
 php -S localhost:8000 -t public public/index.php
 ```
 
-Chrome, Edge and Firefox resolve `*.localhost` to your own machine, so you need no hosts-file changes:
+Chrome, Edge and Firefox resolve `*.localhost` to your own machine, so no hosts-file changes are needed:
 
 - http://localhost:8000 is the main marketplace
-- http://toyota.localhost:8000, http://proton.localhost:8000, http://perodua.localhost:8000 and http://honda.localhost:8000 are the broker sites
+- http://toyota.localhost:8000 is the custom "showroom" templates
+- http://proton.localhost:8000 is the "sleek" stylesheet
+- http://perodua.localhost:8000 is the "friendly" stylesheet
+- http://honda.localhost:8000 is the default theme with brand colours only
 
-If your browser doesn't support that (Safari), use `http://localhost:8000/?broker=toyota`. This only works while `APP_DEBUG=1`.
-
-Enquiries are saved to `storage/leads.jsonl`, tagged with the broker.
+If your browser can't use `*.localhost` (Safari), use `http://localhost:8000/?broker=toyota`. This only works while `APP_DEBUG=1`.
 
 ## How it works
 
 ```
 Request Host header ──► resolve_site()  (src/bootstrap.php)
-   keretaku.my            → main marketplace   (theme: marketplace)
-   toyota.keretaku.my     → broker "toyota"    (theme from config)
+   keretaku.my            → main marketplace   (theme: marketplace, all brokers' cars)
+   toyota.keretaku.my     → broker "toyota"    (theme from config, only their cars)
    www.my-own-domain.my   → broker with that custom_domain
    unknown.keretaku.my    → 404
 ```
@@ -43,23 +59,24 @@ Request Host header ──► resolve_site()  (src/bootstrap.php)
 | Path | What it is |
 |---|---|
 | `public/index.php` | Front controller and routes |
-| `src/bootstrap.php` | Tenant resolution, theme lookup, helpers |
-| `config/brokers.php` | Broker registry: subdomain, name, contact, theme, colours |
-| `data/cars.php` | Inventory; each car belongs to one broker |
-| `themes/base/` | Default templates (every theme falls back here) |
-| `themes/<theme>/` | Per-broker template overrides |
-| `public/themes/<theme>.css` | Per-broker styling |
+| `public/app.js` | Gallery, loan calculator, instant filters, mobile menu (optional; pages work without JS) |
+| `src/bootstrap.php` | Tenant resolution, theme lookup, filtering, photos, icons |
+| `config/brokers.php` | Broker registry: subdomain, contact, rating, theme, colours |
+| `data/cars.php` | Inventory with specs, colours, features, promos and photos |
+| `themes/base/` | Default templates; every theme falls back here |
+| `themes/marketplace/`, `themes/showroom/` | Template overrides |
+| `public/themes/*.css` | Design system (`base.css`) and per-theme styling |
 
 ## Adding a broker
 
-1. Add an entry to `config/brokers.php`. The array key is the subdomain.
+1. Add an entry to `config/brokers.php`. The array key becomes the subdomain.
 2. Add their cars to `data/cars.php` with `'broker' => '<key>'`.
-3. Pick an existing theme or make a new one.
+3. Choose a theme: pick an existing one, add a stylesheet, or add template overrides.
 
 ## Deploying (production)
 
-1. **DNS:** create a wildcard record, e.g. `*.keretaku.my  A  <server-ip>`, plus one for `keretaku.my`.
-2. **SSL:** get a wildcard certificate for `*.keretaku.my` (Let's Encrypt with a DNS challenge, or Cloudflare).
+1. **DNS:** create a wildcard record, `*.keretaku.my  A  <server-ip>`, plus a record for `keretaku.my` itself.
+2. **SSL:** get a wildcard certificate for `*.keretaku.my`, either from Let's Encrypt with a DNS challenge or through Cloudflare.
 3. **Web server** (nginx example):
 
    ```nginx
@@ -81,8 +98,8 @@ Request Host header ──► resolve_site()  (src/bootstrap.php)
 
 ## Next steps toward a real product
 
-- Move `brokers` and `cars` into MySQL tables. The array shapes map directly to columns.
-- Add a broker dashboard (login per broker) to manage stock, upload photos and see leads.
-- Add a super-admin panel to onboard brokers and assign themes.
-- Replace the SVG placeholders with real photos, add image galleries and compare cars.
-- Send lead notifications to brokers by email or WhatsApp.
+- Move `brokers`, `cars` and `leads` into MySQL. The array shapes map directly to tables.
+- Add a broker dashboard where each broker logs in to manage stock, upload photos, edit their theme colours and handle leads.
+- Add a super-admin panel to onboard brokers, verify them and assign themes.
+- Add car comparison, saved cars, a 360° or video gallery, and multiple variants per model.
+- Send new leads to the broker's WhatsApp or email.

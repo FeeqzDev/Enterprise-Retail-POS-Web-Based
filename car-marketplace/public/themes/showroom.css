@@ -1,18 +1,49 @@
-/* Toyota broker: dark premium showroom. Pairs with themes/showroom/home.php. */
-:root { --radius: 4px; --font: "Helvetica Neue", Arial, sans-serif; }
-.site-header { background: #000; border-color: #222; }
-.brand { text-transform: uppercase; letter-spacing: .12em; }
-.car-card, .detail-media, .enquiry { background: #17171a; border: 1px solid #26262b; }
-.car-media { background: radial-gradient(ellipse at 50% 90%, #2a2a30, #17171a 70%); }
-.spotlight { padding: 80px 0 40px; background: radial-gradient(ellipse at 70% 60%, color-mix(in srgb, var(--primary) 35%, transparent), transparent 60%); }
-.spotlight-grid { display: grid; grid-template-columns: 1fr 1.2fr; gap: 32px; align-items: center; }
-.spotlight h1 { font-size: clamp(2.4rem, 6vw, 4.2rem); text-transform: uppercase; letter-spacing: -.01em; }
-.eyebrow { color: var(--primary); text-transform: uppercase; letter-spacing: .2em; font-size: .8rem; font-weight: 700; }
-.lead { font-size: 1.1rem; color: var(--muted); }
-.spot-price { font-size: 1.8rem; font-weight: 800; margin: 16px 0 24px; }
-.spot-price small { font-size: 1rem; font-weight: 400; color: var(--muted); }
-.spotlight .btn { margin-right: 10px; }
-.usp { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #26262b; border: 1px solid #26262b; }
-.usp div { background: var(--bg); padding: 20px; display: grid; }
-.usp span { color: var(--muted); font-size: .9rem; }
-@media (max-width: 760px) { .spotlight-grid, .usp { grid-template-columns: 1fr; } }
+/* Toyota broker: dark, cinematic premium showroom. Pairs with themes/showroom/home.php. */
+:root {
+  --bg: #0b0b0d; --surface: #141417; --surface-2: #1d1d21; --text: #f4f4f5; --muted: #a1a1aa; --border: #26262b;
+  --accent: #000; --radius: 4px; --radius-sm: 3px; --shadow: none; --shadow-lg: 0 16px 40px rgba(0,0,0,.5);
+}
+.topbar { background: #000; border-bottom: 1px solid var(--border); }
+.site-header { background: rgba(11,11,13,.85); backdrop-filter: blur(12px); }
+.brand-text strong { text-transform: uppercase; letter-spacing: .14em; font-size: .98rem; }
+.btn { text-transform: uppercase; letter-spacing: .08em; font-size: .8rem; }
+.btn-outline { color: var(--text); }
+.btn-light { background: #fff; color: #000; }
+[data-label] { background: linear-gradient(135deg, #1b1b1f, #0f0f12); }
+.price-range select, .sort select, .enquiry input, .enquiry textarea, .loan input[type=number], .filter-search { background: var(--surface-2); }
+.page-head { background: #000; }
+
+.spotlight { position: relative; min-height: calc(100vh - 108px); max-height: 820px; display: flex; align-items: flex-end; color: #fff; }
+.spotlight-bg { position: absolute !important; inset: 0; }
+.spotlight::before { content: ""; position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(0deg, #0b0b0d 0%, rgba(11,11,13,.6) 40%, rgba(11,11,13,.15) 70%, rgba(11,11,13,.5) 100%); }
+.spotlight-inner { position: relative; z-index: 2; width: 100%; padding-bottom: 72px; }
+.spotlight h1 { font-size: clamp(3.4rem, 10vw, 8rem); text-transform: uppercase; letter-spacing: -.03em; line-height: .9; margin-bottom: 12px; }
+.spotlight .lead { font-size: 1.15rem; color: #d4d4d8; margin-bottom: 26px; }
+.spot-price { display: flex; gap: 40px; margin-bottom: 30px; flex-wrap: wrap; }
+.spot-price div { display: grid; border-left: 2px solid var(--primary); padding-left: 14px; }
+.spot-price small { color: var(--muted); text-transform: uppercase; letter-spacing: .12em; font-size: .72rem; }
+.spot-price strong { font-size: 1.5rem; }
+
+.lineup { padding: 72px 0 24px; }
+.lineup-row { display: grid; grid-template-columns: 1.4fr 1fr; gap: 48px; align-items: center; padding: 40px 0; border-top: 1px solid var(--border); }
+.lineup-row.flip .lineup-media { order: 2; }
+.lineup-media { aspect-ratio: 16 / 9; }
+.lineup-media img { transition: transform .6s; }
+.lineup-row:hover .lineup-media img { transform: scale(1.03); }
+.lineup-text h3 { font-size: clamp(2rem, 4vw, 3rem); text-transform: uppercase; letter-spacing: -.02em; }
+.lineup-text h3 span { display: block; font-size: 1rem; letter-spacing: .1em; color: var(--muted); font-weight: 500; margin-top: 6px; }
+.lineup-specs { list-style: none; padding: 0; margin: 18px 0; display: flex; gap: 28px; color: var(--muted); }
+.lineup-specs strong { display: block; color: var(--text); font-size: 1.5rem; }
+.lineup-price { font-size: 1.4rem; font-weight: 700; margin-bottom: 20px; }
+.lineup-price small { color: var(--muted); font-weight: 400; font-size: .95rem; }
+.usp-row { margin-top: 24px; }
+.cta-band { background: var(--primary); }
+.cta-band .btn-primary { background: #000; color: #fff; }
+.loan-result { background: #000; border: 1px solid var(--border); }
+
+@media (max-width: 900px) {
+  .lineup-row, .lineup-row.flip { grid-template-columns: 1fr; gap: 20px; }
+  .lineup-row.flip .lineup-media { order: 0; }
+  .spotlight { min-height: 560px; }
+}

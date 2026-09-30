@@ -1,13 +1,23 @@
-/* Proton broker: clean corporate look (CSS-only customisation, templates from base). */
-:root { --radius: 2px; --font: Georgia, "Times New Roman", serif; }
-body { font-family: system-ui, sans-serif; }
-h1, h2, h3, .brand { font-family: var(--font); }
-.site-header { background: var(--primary); color: #fff; border: 0; }
-.site-header .btn { background: var(--accent); color: var(--primary); }
-.hero { background: linear-gradient(120deg, var(--primary) 55%, color-mix(in srgb, var(--primary) 70%, var(--accent))); padding: 96px 0; }
-.hero h1 { letter-spacing: .02em; }
-.hero .btn { background: var(--accent); color: var(--primary); }
-.section h2 { border-bottom: 2px solid var(--accent); display: inline-block; padding-bottom: 6px; margin-bottom: 24px; }
-.car-card { background: #fff; border: 1px solid #e2e8f0; }
-.car-price { color: var(--primary); }
-.btn { background: var(--primary); text-transform: uppercase; letter-spacing: .08em; font-size: .85rem; }
+/* Proton broker: refined corporate, navy + gold, serif headlines. CSS-only customisation. */
+:root { --radius: 4px; --radius-sm: 3px; --font-display: "Playfair Display", Georgia, serif; --bg: #f6f7fa; }
+.topbar { background: #061a42; }
+.site-header { background: var(--primary); border: 0; color: #fff; }
+.brand-mark { background: var(--accent); color: var(--primary); border-radius: 2px; font-family: var(--font-display); }
+.brand-text strong { font-family: var(--font-display); font-size: 1.2rem; }
+.brand-text small { color: rgba(255,255,255,.7); }
+.main-nav > a:not(.btn):hover { color: var(--accent); }
+.site-header .btn-primary { background: var(--accent); color: var(--primary); }
+.btn { text-transform: uppercase; letter-spacing: .1em; font-size: .78rem; }
+.eyebrow { color: var(--accent); }
+.tenant-hero::before { background: linear-gradient(90deg, rgba(6,26,66,.92) 0%, rgba(6,26,66,.6) 50%, rgba(6,26,66,.05) 100%); }
+.tenant-hero .btn-primary { background: var(--accent); color: var(--primary); }
+.tenant-hero h1 { font-weight: 700; }
+.section-head h2 { position: relative; padding-bottom: 12px; }
+.section-head h2::after { content: ""; position: absolute; left: 0; bottom: 0; width: 56px; height: 3px; background: var(--accent); }
+.usp > .icon, .spec-grid .icon { color: var(--accent); }
+.car-card-price span, .link-arrow { color: var(--primary); }
+.badge-promo { background: var(--accent); color: var(--primary); }
+.cta-band { background: linear-gradient(120deg, var(--primary), #061a42); }
+.cta-band .btn-primary { background: var(--accent); color: var(--primary); }
+.stats strong { color: var(--primary); font-family: var(--font-display); }
+@media (max-width: 900px) { .main-nav { background: var(--primary); } .main-nav > a:not(.btn) { border-color: rgba(255,255,255,.15); } }
