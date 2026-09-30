@@ -1,0 +1,67 @@
+/* Shared structure. Themes override the variables and add their own flavour on top. */
+:root {
+  --primary: #2563eb; --accent: #111827; --bg: #ffffff; --text: #111827;
+  --surface: color-mix(in srgb, var(--bg) 92%, var(--text) 8%);
+  --muted: color-mix(in srgb, var(--text) 60%, var(--bg) 40%);
+  --radius: 10px; --font: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: var(--font); background: var(--bg); color: var(--text); line-height: 1.5; }
+a { color: inherit; }
+h1, h2, h3 { line-height: 1.15; margin: 0 0 .5em; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 16px; }
+.section { padding: 48px 16px; }
+.center { text-align: center; }
+
+.site-header { border-bottom: 1px solid color-mix(in srgb, var(--text) 12%, transparent); background: var(--bg); position: sticky; top: 0; z-index: 10; }
+.header-row { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 16px; }
+.brand { font-weight: 800; font-size: 1.15rem; text-decoration: none; }
+nav { display: flex; gap: 18px; align-items: center; }
+nav a { text-decoration: none; font-weight: 500; }
+
+.btn { display: inline-block; background: var(--primary); color: #fff; border: 0; border-radius: var(--radius);
+       padding: 12px 22px; font: inherit; font-weight: 600; text-decoration: none; cursor: pointer; }
+.btn:hover { filter: brightness(1.08); }
+.btn-small { padding: 8px 14px; font-size: .9rem; }
+.btn-ghost { background: transparent; color: var(--text); box-shadow: inset 0 0 0 2px currentColor; }
+
+.hero { background: var(--primary); color: #fff; padding: 72px 0; }
+.hero h1 { font-size: clamp(2rem, 5vw, 3.2rem); }
+.hero p { font-size: 1.15rem; opacity: .9; max-width: 640px; }
+.hero .btn { background: #fff; color: var(--primary); }
+
+.car-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+.car-card { display: block; text-decoration: none; background: var(--surface); border-radius: var(--radius); overflow: hidden;
+            transition: transform .15s, box-shadow .15s; }
+.car-card:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(0,0,0,.12); }
+.car-media { background: linear-gradient(180deg, color-mix(in srgb, var(--primary) 10%, var(--bg)), var(--surface)); padding: 20px 16px 6px; }
+.car-art { width: 100%; height: auto; display: block; }
+.car-body { padding: 14px 16px 18px; }
+.car-body h3 { font-size: 1.2rem; margin: 2px 0 8px; }
+.car-body h3 span, .car-detail h1 span { font-weight: 400; color: var(--muted); }
+.car-make { font-size: .8rem; text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+.car-price { font-size: 1.25rem; font-weight: 800; color: var(--primary); }
+.car-price.big { font-size: 2rem; }
+.car-monthly { font-size: .9rem; color: var(--muted); }
+.car-broker { margin-top: 8px; font-size: .85rem; font-weight: 600; }
+
+.back { display: inline-block; margin-bottom: 20px; text-decoration: none; color: var(--muted); }
+.detail-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 40px; }
+.detail-media { background: var(--surface); border-radius: var(--radius); padding: 32px; }
+.specs { width: 100%; border-collapse: collapse; margin-top: 20px; }
+.specs th, .specs td { text-align: left; padding: 10px 4px; border-bottom: 1px solid color-mix(in srgb, var(--text) 10%, transparent); }
+.specs th { color: var(--muted); font-weight: 500; width: 40%; }
+.enquiry { margin-top: 24px; background: var(--surface); padding: 22px; border-radius: var(--radius); display: grid; gap: 12px; }
+.enquiry label { display: grid; gap: 4px; font-size: .9rem; font-weight: 600; }
+.enquiry input, .enquiry textarea, .search select { font: inherit; padding: 10px 12px; border-radius: calc(var(--radius) - 4px);
+  border: 1px solid color-mix(in srgb, var(--text) 20%, transparent); background: var(--bg); color: var(--text); }
+.error { color: #b91c1c; font-weight: 600; margin: 0; }
+
+.site-footer { border-top: 1px solid color-mix(in srgb, var(--text) 12%, transparent); padding: 28px 0; margin-top: 40px; font-size: .9rem; color: var(--muted); }
+.footer-row { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.powered { font-weight: 600; }
+
+@media (max-width: 760px) {
+  .detail-grid { grid-template-columns: 1fr; }
+  nav a:not(.btn) { display: none; }
+}

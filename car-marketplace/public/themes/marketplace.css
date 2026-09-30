@@ -1,0 +1,12 @@
+/* KeretaKu main site: neutral, trustworthy, lets broker colours stand out. */
+:root { --primary: #ff5a1f; --accent: #0f172a; --bg: #ffffff; --text: #0f172a; --radius: 12px; }
+.logo-dot { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: var(--primary); margin-right: 8px; }
+.hero { background: radial-gradient(circle at 80% 0%, #1e293b, #0f172a); }
+.hero .btn { background: var(--primary); color: #fff; }
+.search { display: grid; grid-template-columns: repeat(3, 1fr) auto; gap: 10px; margin-top: 28px; background: #fff; padding: 10px; border-radius: 14px; max-width: 860px; }
+.broker-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+.broker-card { display: grid; gap: 4px; padding: 20px; border-radius: 12px; text-decoration: none; background: var(--surface); border-left: 6px solid var(--primary); }
+.broker-card:hover { box-shadow: 0 8px 20px rgba(0,0,0,.08); }
+.broker-makes { font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; color: var(--primary); font-weight: 700; }
+.broker-host { font-size: .85rem; color: var(--muted); font-family: ui-monospace, monospace; }
+@media (max-width: 760px) { .search { grid-template-columns: 1fr; } }

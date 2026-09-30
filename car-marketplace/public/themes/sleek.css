@@ -1,0 +1,13 @@
+/* Proton broker: clean corporate look (CSS-only customisation, templates from base). */
+:root { --radius: 2px; --font: Georgia, "Times New Roman", serif; }
+body { font-family: system-ui, sans-serif; }
+h1, h2, h3, .brand { font-family: var(--font); }
+.site-header { background: var(--primary); color: #fff; border: 0; }
+.site-header .btn { background: var(--accent); color: var(--primary); }
+.hero { background: linear-gradient(120deg, var(--primary) 55%, color-mix(in srgb, var(--primary) 70%, var(--accent))); padding: 96px 0; }
+.hero h1 { letter-spacing: .02em; }
+.hero .btn { background: var(--accent); color: var(--primary); }
+.section h2 { border-bottom: 2px solid var(--accent); display: inline-block; padding-bottom: 6px; margin-bottom: 24px; }
+.car-card { background: #fff; border: 1px solid #e2e8f0; }
+.car-price { color: var(--primary); }
+.btn { background: var(--primary); text-transform: uppercase; letter-spacing: .08em; font-size: .85rem; }
